@@ -2,7 +2,8 @@ import React, { Component } from 'react';
 import { withRouter } from 'react-router-dom';
 import {setUserToken} from '../../store/actions';
 
-import { connect } from "react-redux";
+import { connect} from "react-redux";
+import { Redirect } from 'react-router-dom';
 
 import {LoginForm} from '../../components';
 
@@ -10,20 +11,27 @@ function mapDispatchToProps(dispatch){
     return{
       setUserToken: token => dispatch(setUserToken(token))
     }
-  }
-  function mapStateToProps(state) {
+}
+function mapStateToProps(state) {
     const { user } = state;
     return {
         user
     };
-  }
+}
 
 class Login extends Component {
     render(){
-        console.log(this.props);
+        let isAuth = this.props.user.token;
 
         return(
-             <LoginForm />
+            <div>
+            {isAuth ? (
+                <Redirect to="/Vehicles" />
+            ):(
+                <LoginForm url="/"/>
+            )}
+            </div>
+            
         );
     }
 }
