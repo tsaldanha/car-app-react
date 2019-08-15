@@ -1,0 +1,8 @@
+.panel-block{
+    background-color: #FFF;
+    display: grid !important;
+    grid-template-columns: 80% 20%
+}
+.panel-block .action{
+    justify-self: end;
+}

@@ -6,6 +6,7 @@ import { connect} from "react-redux";
 import { Redirect } from 'react-router-dom';
 
 import {LoginForm} from '../../components';
+import './Login.scss';
 
 function mapDispatchToProps(dispatch){
     return{
@@ -25,13 +26,15 @@ class Login extends Component {
         let {isAuth} = this.props.user;
 
         return(
-            <div>
+            <React.Fragment>
             {isAuth ? (
                 <Redirect to="/Vehicles" />
             ):(
-                <LoginForm url="/"/>
+                <div className="box login">
+                    <LoginForm url="/"/>
+                </div>
             )}
-            </div>
+            </React.Fragment>
             
         );
     }

@@ -16,6 +16,10 @@ function mapStateToProps(state) {
 }
 
 class LoginForm extends Component {
+    state = { 
+        error: false,
+        msg: ''
+    }
     Query = (email, password) => {
         let query = `{
             "email" : "${email}",
@@ -24,19 +28,22 @@ class LoginForm extends Component {
         return query;
     }
 
-    componentDidMount() {
-        //this.onSubmit();
-    }
-
     onSubmit = (event) => {
         let [email, password] = event.target;
         Request
             .post('/auth', this.Query(email.value, password.value))
             .then(result =>{
                 this.props.setUserToken(result.data.data.token);
+                this.setState({
+                    error: false,
+                    msg : ""
+                })
             })
             .catch(error =>{
-                console.log(error);
+                this.setState({
+                    error: true,
+                    msg : "Email ou Senha invalidos!"
+                })
             });
         event.preventDefault();
     }
@@ -44,27 +51,42 @@ class LoginForm extends Component {
 
     render(){
         return(
-            <form method="POST" action={this.props.url} onSubmit={this.onSubmit.bind(this)}>
-                <p>
-                    <label>Email: </label>
-                    <input  type="email" 
-                            name="email" 
-                            placeholder="Digite seu e-mail" 
-                            defaultValue=""
-                            required
-                    />
-                </p>
-                <p>
-                    <label>Senha: </label>
-                    <input  type="password" 
-                            name="password" 
-                            placeholder="Digite sua senha" 
-                            defaultValue=""
-                            required
-                    />
-                </p>
-                <button type="submit">Entrar</button>
-            </form>
+            <React.Fragment>
+                <form method="POST" action={this.props.url} onSubmit={this.onSubmit.bind(this)}>
+                    <div className="field">
+                        <div className="control">
+                            <label className="label">Email: </label>
+                            <input  type="email" 
+                                    name="email" 
+                                    placeholder="Digite seu e-mail" 
+                                    defaultValue=""
+                                    className="input"
+                                    required
+                            />
+                        </div>
+                    </div>
+                    <div className="field">
+                        <div className="control">
+                            <label  className="label">Senha: </label>
+                            <input  type="password" 
+                                    name="password" 
+                                    placeholder="Digite sua senha" 
+                                    defaultValue=""
+                                    className="input"
+                                    required
+                            />
+                        </div>
+                    </div>
+                    <div className="field">
+                        <div className="control">
+                            <button type="submit"  className="button is-primary is-fullwidth">Entrar</button>
+                        </div>
+                    </div>
+                </form>
+                {this.state.error && 
+                      <p class="help is-danger">{ this.state.msg}</p>
+                }
+            </React.Fragment>
         );
     }
 }

@@ -25,8 +25,7 @@ class Vehicles extends Component {
     
     componentDidMount(){
         let { isAuth } = this.props.user;
-        if(isAuth){
-            
+        if(isAuth){    
             Request
             .get('/vehicle',{headers:{'Authorization' : "Bearer " + this.props.user.token}})
             .then(result=>{
@@ -41,16 +40,20 @@ class Vehicles extends Component {
     render(){
         let { isAuth } = this.props.user;
         return(
-            <div>
+            <React.Fragment>
             {isAuth ? (
                 <div>
-                    <VehicleForm />
-                    <VehicleList list={this.props.user.vehicles}/>
+                    <div className="box">
+                        <VehicleForm />
+                    </div>
+                    
+                        <VehicleList list={this.props.user.vehicles}/>
+                    
                 </div>
             ):(
                 <Redirect to="/" />
             )}
-            </div>
+            </React.Fragment>
         )
     }
     
