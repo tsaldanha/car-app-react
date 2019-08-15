@@ -13,7 +13,8 @@ function mapDispatchToProps(dispatch){
     }
 }
 function mapStateToProps(state) {
-    const { user } = state;
+    const  user  = {...state} ;
+    console.log(user)
     return {
         user
     };
@@ -21,7 +22,7 @@ function mapStateToProps(state) {
 
 class Login extends Component {
     render(){
-        let isAuth = this.props.user.token;
+        let {isAuth} = this.props.user;
 
         return(
             <div>

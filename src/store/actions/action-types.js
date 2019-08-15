@@ -1,2 +1,5 @@
 export const SET_USER_TOKEN = "SET_USER_TOKEN";
+export const SET_USER_DATA = "SET_USER_DATA";
+export const SET_USER_VEHICLES = "SET_USER_VEHICLES";
 export const ADD_VEHICLE = "ADD_VEHICLE";
+export const DELETE_VEHICLES = "DELETE_VEHICLES";

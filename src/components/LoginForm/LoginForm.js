@@ -1,8 +1,7 @@
 import React, { Component } from 'react';
-import axios from 'axios';
 import { connect } from "react-redux";
 import {setUserToken} from '../../store/actions';
-
+import  Request  from '../../utils';
 
 function mapDispatchToProps(dispatch){
     return{
@@ -17,12 +16,6 @@ function mapStateToProps(state) {
 }
 
 class LoginForm extends Component {
-    LoginRequest = axios.create({
-        baseURL: 'http://localhost:8181/auth',
-        headers: {
-          'Content-Type': 'application/json'
-        }
-    });
     Query = (email, password) => {
         let query = `{
             "email" : "${email}",
@@ -37,8 +30,8 @@ class LoginForm extends Component {
 
     onSubmit = (event) => {
         let [email, password] = event.target;
-        this.LoginRequest
-            .post('', this.Query(email.value, password.value))
+        Request
+            .post('/auth', this.Query(email.value, password.value))
             .then(result =>{
                 this.props.setUserToken(result.data.data.token);
             })
